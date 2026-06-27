@@ -18,12 +18,6 @@ async function post<T>(url: string, body: unknown): Promise<T> {
   return JSON.parse(text) as T;
 }
 
-async function get<T>(url: string): Promise<T> {
-  const res = await fetch(url);
-  const text = await res.text();
-  if (!res.ok) throw new Error(`HTTP ${res.status} ${url}: ${text}`);
-  return JSON.parse(text) as T;
-}
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 

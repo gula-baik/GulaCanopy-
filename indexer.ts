@@ -81,7 +81,9 @@ export class Indexer {
   private running       = false;
   private timer: ReturnType<typeof setTimeout> | null = null;
 
-  constructor(private readonly store: GulaLogStore) {}
+  constructor(private readonly store: GulaLogStore) {
+    this.store = store;
+  }
 
   start(): void {
     if (this.running) return;
@@ -182,7 +184,7 @@ export class Indexer {
    */
   async indexSender(address: string): Promise<void> {
     let page = 1;
-    while (true) {
+    for (let iteration = 0; iteration < 10; iteration++) {
       const res = await getTxsBySender(CONFIG.RPC_URL, address, page, 50);
       for (const tx of res.results) {
         if (tx.messageType !== 'gula_log') continue;
